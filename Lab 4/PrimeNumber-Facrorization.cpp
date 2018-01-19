@@ -4,50 +4,42 @@
 #include <vector>
 #include "PrimeNumberFactorize.h"
 
+PrimeNumberFactorization::PrimeNumberFactorization(unsigned int num) {
 
-void PrimeNumberFactorization::Prime_Num() {
+	value = num;
+	factors.push_back(1);
 
-	prime_num[1] = 1;
-	for (int i = 2; i < MAXN; i++)
-		prime_num[i] = i;
+	if (num < 2 || num != 1)
+		factors.push_back(num);
+	if (num % 2 == 0)
+		factors.push_back(2);
 
-	for (int i = 4; i < MAXN; i += 2)
-		prime_num[i] = 2;
-
-	for (int i = 3; i*i < MAXN; i++)
+	for (int div = 3; num / div >= div; div += 2)
 	{
-		if (prime_num[i] == i)
-		{
-			for (int j = i*i; i < MAXN; j += i)
-				if (prime_num[j] == j)
-					prime_num[j] = i;
-		}
+		if (num%div == 0)
+			factors.push_back(div);
 	}
-
-}
-
-const std::vector<unsigned int> PrimeNumberFactorization::getFactorization(unsigned int num){
-
-	std::vector <unsigned int> value;
-	while (num != 1)
-	{
-		value.push_back(prime_num[num]);
-		num = num / prime_num[num];
-	}
-	return value;
 
 }
 
 const std::string PrimeNumberFactorization::toString() {
-	std::string factorStr(_convertInt(prime_num[0]));
-	for (int i = 1; i < MAXN; i++) {
+	std::string factorStr(_convertInt(factors[0]));
+	for (int i = 1; i < factors.size(); i++) {
 		factorStr += " ";
-		factorStr += _convertInt(prime_num[i]);
+		factorStr += _convertInt(factors[i]);
 	}
 	return std::move(factorStr);
 }
 
-const std::string PrimeNumberFactorization::_convertInt(unsigned int value) {
+const std::vector<unsigned int>& PrimeNumberFactorization::getFactors() {
+	return factors;
+}
+
+const unsigned int PrimeNumberFactorization::getValue() {
+	return value;
+}
+
+const std::string PrimeNumberFactorization::_convertInt(unsigned int num) {
 	std::ostringstream oss;
 	oss << value;
 	return std::move(std::string(oss.str()));

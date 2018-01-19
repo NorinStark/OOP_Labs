@@ -1,20 +1,20 @@
 #pragma once
 
 #include <vector>
-#include <cstddef>
 #include <string>
 
-#define MAXN 10001
 
 class PrimeNumberFactorization {
 public:
 
-	void Prime_Num();
-	const std::vector<unsigned int> getFactorization(unsigned int num);
+	PrimeNumberFactorization(unsigned int num);
 	const std::string toString();
+	const std::vector<unsigned int>& getFactors();
+	const unsigned int getValue();
 
 private:
-	unsigned int prime_num[MAXN];
-	const std::string _convertInt(unsigned int value);
+	unsigned int value;
+	std::vector <unsigned int> factors;
+	const std::string _convertInt(unsigned int num);
 
 };
